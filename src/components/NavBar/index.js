@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import LogoutButton from "../Logout";
-import { AuthUserContext } from "../Session";
+import { withAuthUser } from "../Session";
 
 import * as ROUTES from "../../constants/routes";
 
@@ -19,10 +19,9 @@ const NavBarNoAuth = () => (
   </nav>
 );
 
-const NavBar = ({ authUser }) => (
-  <AuthUserContext.Consumer>
-    {authUser => (authUser ? <NavBarAuth /> : <NavBarNoAuth />)}
-  </AuthUserContext.Consumer>
-);
+const NavBarBase = ({ authUser }) =>
+  authUser ? <NavBarAuth /> : <NavBarNoAuth />;
+
+const NavBar = withAuthUser(NavBarBase);
 
 export default NavBar;

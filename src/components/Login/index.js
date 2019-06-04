@@ -8,7 +8,7 @@ import * as ROUTES from "../../constants/routes";
 const LoginPage = () => (
   <div>
     <h1>Login</h1>
-    <LoginForm />}
+    <LoginForm />
     <RegistrationLink />
   </div>
 );

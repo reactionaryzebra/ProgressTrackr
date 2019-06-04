@@ -1,14 +1,6 @@
 import React, { Component } from "react";
 import { withFirebase } from "../Firebase";
-import { AuthUserContext } from "../Session";
-
-const StudentList = () => (
-  <div>
-    <ul>
-      <li>testing</li>
-    </ul>
-  </div>
-);
+import { withAuthUser } from "../Session";
 
 class StudentListBase extends Component {
   state = {
@@ -33,5 +25,7 @@ class StudentListBase extends Component {
     return <div />;
   }
 }
+
+const StudentList = withFirebase(withAuthUser(StudentListBase));
 
 export default StudentList;

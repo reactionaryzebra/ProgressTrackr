@@ -6,7 +6,7 @@ import * as ROUTES from "../../constants/routes";
 const RegistrationPage = () => (
   <div>
     <h1>Registration</h1>
-    <RegistrationForm />}
+    <RegistrationForm />
   </div>
 );
 
