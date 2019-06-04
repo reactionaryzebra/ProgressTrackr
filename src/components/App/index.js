@@ -6,6 +6,7 @@ import { AuthUserContext } from "../Session";
 import NavBar from "../NavBar";
 import RegistrationPage from "../Registration";
 import LoginPage from "../Login";
+import HomePage from "../Home";
 
 import * as ROUTES from "../../constants/routes";
 
@@ -39,11 +40,7 @@ class AppBase extends Component {
 
           <Route exact path={ROUTES.REGISTER} component={RegistrationPage} />
           <Route exact path={ROUTES.LOGIN} component={LoginPage} />
-          <Route
-            exact
-            path={ROUTES.HOME}
-            render={() => <div>This is the Home page</div>}
-          />
+          <Route exact path={ROUTES.HOME} component={HomePage} />
         </Router>
       </AuthUserContext.Provider>
     );
