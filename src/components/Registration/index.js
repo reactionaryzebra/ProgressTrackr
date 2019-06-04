@@ -28,6 +28,15 @@ class RegistrationFormBase extends Component {
     e.preventDefault();
     try {
       const authUser = await this.props.firebase.doCreateUser(email, password);
+      await this.props.firebase.db
+        .collection("users")
+        .doc(authUser.user.uid)
+        .set({
+          fullName,
+          email,
+          assignedStudents: [],
+          role: "teacher"
+        });
       this.setState({ ...initialState });
       this.props.history.push(ROUTES.HOME);
     } catch (error) {
