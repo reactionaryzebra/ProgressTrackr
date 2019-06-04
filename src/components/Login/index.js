@@ -2,15 +2,13 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 
 import { RegistrationLink } from "../Registration";
-import { FirebaseContext } from "../Firebase";
+import { withFirebase } from "../Firebase";
 import * as ROUTES from "../../constants/routes";
 
 const LoginPage = () => (
   <div>
     <h1>Login</h1>
-    <FirebaseContext.Consumer>
-      {firebase => <LoginForm firebase={firebase} />}
-    </FirebaseContext.Consumer>
+    <LoginForm />}
     <RegistrationLink />
   </div>
 );
@@ -71,7 +69,7 @@ class LoginFormBase extends Component {
   }
 }
 
-const LoginForm = withRouter(LoginFormBase);
+const LoginForm = withFirebase(withRouter(LoginFormBase));
 
 export default LoginPage;
 

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import { FirebaseContext } from "../Firebase";
+import { withFirebase } from "../Firebase";
 import { AuthUserContext } from "../Session";
 
 import NavBar from "../NavBar";
@@ -47,9 +47,6 @@ class AppBase extends Component {
   }
 }
 
-const App = () => (
-  <FirebaseContext.Consumer>
-    {firebase => <AppBase firebase={firebase} />}
-  </FirebaseContext.Consumer>
-);
+const App = withFirebase(AppBase);
+
 export default App;
