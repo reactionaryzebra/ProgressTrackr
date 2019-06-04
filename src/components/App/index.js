@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { FirebaseContext } from "../Firebase";
+import { AuthUserContext } from "../Session";
 
 import NavBar from "../NavBar";
 import RegistrationPage from "../Registration";
@@ -21,17 +22,19 @@ class AppBase extends Component {
 
   render() {
     return (
-      <Router>
-        <NavBar authUser={this.state.authUser} />
+      <AuthUserContext.Provider value={this.state.authUser}>
+        <Router>
+          <NavBar />
 
-        <Route exact path={ROUTES.REGISTER} component={RegistrationPage} />
-        <Route exact path={ROUTES.LOGIN} component={LoginPage} />
-        <Route
-          exact
-          path={ROUTES.HOME}
-          render={() => <div>This is the Home page</div>}
-        />
-      </Router>
+          <Route exact path={ROUTES.REGISTER} component={RegistrationPage} />
+          <Route exact path={ROUTES.LOGIN} component={LoginPage} />
+          <Route
+            exact
+            path={ROUTES.HOME}
+            render={() => <div>This is the Home page</div>}
+          />
+        </Router>
+      </AuthUserContext.Provider>
     );
   }
 }
