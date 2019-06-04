@@ -13,6 +13,11 @@ const App = () => (
 
     <Route exact path={ROUTES.REGISTER} component={RegistrationPage} />
     <Route exact path={ROUTES.LOGIN} component={LoginPage} />
+    <Route
+      exact
+      path={ROUTES.HOME}
+      render={() => <div>This is the Home page</div>}
+    />
   </Router>
 );
 
