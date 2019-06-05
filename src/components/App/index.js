@@ -40,7 +40,9 @@ class AppBase extends Component {
 
           <Route exact path={ROUTES.REGISTER} component={RegistrationPage} />
           <Route exact path={ROUTES.LOGIN} component={LoginPage} />
-          <Route exact path={ROUTES.HOME} component={HomePage} />
+          {this.state.authUser && (
+            <Route exact path={ROUTES.HOME} component={HomePage} />
+          )}
         </Router>
       </AuthUserContext.Provider>
     );

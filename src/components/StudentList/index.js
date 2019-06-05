@@ -4,25 +4,40 @@ import { withAuthUser } from "../Session";
 
 class StudentListBase extends Component {
   state = {
-    students: null
+    students: null,
+    error: null
   };
 
   fetchStudents = async () => {
     const { firebase, authUser } = this.props;
     const studentsDB = firebase.db.collection("students");
-    const response = studentsDB.where(
-      "teachers",
-      "array-contains",
-      authUser.id
-    );
-    console.log(response);
+    try {
+      const response = await studentsDB
+        .where("teachers", "array-contains", authUser.id)
+        .get();
+      const students = response.docs;
+      this.setState({ students });
+    } catch (error) {
+      this.setState({ error });
+    }
   };
+
   componentDidMount() {
     this.fetchStudents();
   }
 
   render() {
-    return <div />;
+    return (
+      <div>
+        <h2>Students</h2>
+        <ul>
+          {this.state.students &&
+            this.state.students.map((student, i) => (
+              <li key={i}>{student.data().name}</li>
+            ))}
+        </ul>
+      </div>
+    );
   }
 }
 
