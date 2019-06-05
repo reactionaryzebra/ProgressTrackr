@@ -1,11 +1,17 @@
 import React, { Component } from "react";
 import { withFirebase } from "../Firebase";
 import { withAuthUser } from "../Session";
+import CreateStudentForm from "../CreateStudent";
 
 class StudentListBase extends Component {
   state = {
     students: null,
+    adding: false,
     error: null
+  };
+
+  setAdding = bool => {
+    this.setState({ adding: bool });
   };
 
   fetchStudents = async () => {
@@ -13,7 +19,7 @@ class StudentListBase extends Component {
     const studentsDB = firebase.db.collection("students");
     try {
       const response = await studentsDB
-        .where("teachers", "array-contains", authUser.id)
+        .where("teachers", "array-contains", authUser.uid)
         .get();
       const students = response.docs;
       this.setState({ students });
@@ -33,9 +39,13 @@ class StudentListBase extends Component {
         <ul>
           {this.state.students &&
             this.state.students.map((student, i) => (
-              <li key={i}>{student.data().name}</li>
+              <li key={i}>{student.data().fullName}</li>
             ))}
         </ul>
+        {this.state.adding && <CreateStudentForm setAdding={this.setAdding} />}
+        <button onClick={() => this.setState({ adding: true })}>
+          Add Student
+        </button>
       </div>
     );
   }

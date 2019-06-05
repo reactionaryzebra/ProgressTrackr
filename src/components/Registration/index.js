@@ -30,10 +30,8 @@ class RegistrationFormBase extends Component {
         .collection("users")
         .doc(authUser.user.uid)
         .set({
-          id: authUser.user.uid,
           fullName,
           email,
-          assignedStudents: [],
           role: "teacher"
         });
       this.setState({ ...initialState });

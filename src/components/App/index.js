@@ -16,20 +16,20 @@ class AppBase extends Component {
     authUser: null
   };
 
-  fetchUser = async authUser => {
-    const userDB = this.props.firebase.db.collection("users");
-    try {
-      const response = await userDB.doc(authUser.uid).get();
-      const foundUser = response.data();
-      this.setState({ authUser: foundUser });
-    } catch (error) {
-      throw new Error(error);
-    }
-  };
+  // fetchUser = async authUser => {
+  //   const userDB = this.props.firebase.db.collection("users");
+  //   try {
+  //     const response = await userDB.doc(authUser.uid).get();
+  //     const foundUser = response.data();
+  //     this.setState({ authUser: foundUser });
+  //   } catch (error) {
+  //     throw new Error(error);
+  //   }
+  // };
 
   componentDidMount() {
     this.props.firebase.auth.onAuthStateChanged(authUser =>
-      authUser ? this.fetchUser(authUser) : this.setState({ authUser: null })
+      authUser ? this.setState({ authUser }) : this.setState({ authUser: null })
     );
   }
 
@@ -41,9 +41,10 @@ class AppBase extends Component {
 
           <Route exact path={ROUTES.REGISTER} component={RegistrationPage} />
           <Route exact path={ROUTES.LOGIN} component={LoginPage} />
-          {(this.state.authUser && (
+          {this.state.authUser && (
             <Route exact path={ROUTES.HOME} component={HomePage} />
-          )) || (
+          )}
+          {this.state.authUser && (
             <Route
               exact
               path={ROUTES.CREATESTUDENT}
