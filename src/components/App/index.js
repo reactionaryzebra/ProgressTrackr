@@ -7,6 +7,7 @@ import NavBar from "../NavBar";
 import RegistrationPage from "../Registration";
 import LoginPage from "../Login";
 import HomePage from "../Home";
+import CreateStudentPage from "../CreateStudent";
 
 import * as ROUTES from "../../constants/routes";
 
@@ -40,8 +41,14 @@ class AppBase extends Component {
 
           <Route exact path={ROUTES.REGISTER} component={RegistrationPage} />
           <Route exact path={ROUTES.LOGIN} component={LoginPage} />
-          {this.state.authUser && (
+          {(this.state.authUser && (
             <Route exact path={ROUTES.HOME} component={HomePage} />
+          )) || (
+            <Route
+              exact
+              path={ROUTES.CREATESTUDENT}
+              component={CreateStudentPage}
+            />
           )}
         </Router>
       </AuthUserContext.Provider>
