@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { withFirebase } from "../Firebase";
 import { withAuthUser } from "../Session";
+import CreateTaskForm from "../CreateTask";
 
 class TaskListBase extends Component {
   state = {
@@ -40,6 +41,7 @@ class TaskListBase extends Component {
               ))
             : null}
         </ul>
+        {this.state.adding && <CreateTaskForm setAdding={this.setAdding} />}
         <button onClick={() => this.setState({ adding: true })}>
           Add Task
         </button>
