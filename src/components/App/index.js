@@ -7,7 +7,7 @@ import NavBar from "../NavBar";
 import RegistrationPage from "../Registration";
 import LoginPage from "../Login";
 import HomePage from "../Home";
-import CreateStudentPage from "../CreateStudent";
+import StudentPage from "../StudentPage";
 
 import * as ROUTES from "../../constants/routes";
 
@@ -44,13 +44,7 @@ class AppBase extends Component {
           {this.state.authUser && (
             <Route exact path={ROUTES.HOME} component={HomePage} />
           )}
-          {this.state.authUser && (
-            <Route
-              exact
-              path={ROUTES.CREATESTUDENT}
-              component={CreateStudentPage}
-            />
-          )}
+          <Route path={ROUTES.SHOWSTUDENT} component={StudentPage} />
         </Router>
       </AuthUserContext.Provider>
     );

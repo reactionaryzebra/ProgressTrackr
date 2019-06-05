@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import { withFirebase } from "../Firebase";
 import { withAuthUser } from "../Session";
 import CreateStudentForm from "../CreateStudent";
@@ -37,7 +38,16 @@ class StudentListBase extends Component {
         <ul>
           {this.state.students.length > 0
             ? this.state.students.map((student, i) => (
-                <li key={i}>{student.data().fullName}</li>
+                <div key={i}>
+                  <li>{student.data().fullName}</li>
+                  <button
+                    onClick={() =>
+                      this.props.history.push(`/students/${student.id}`)
+                    }
+                  >
+                    Edit Student
+                  </button>
+                </div>
               ))
             : null}
         </ul>
@@ -50,6 +60,6 @@ class StudentListBase extends Component {
   }
 }
 
-const StudentList = withFirebase(withAuthUser(StudentListBase));
+const StudentList = withFirebase(withAuthUser(withRouter(StudentListBase)));
 
 export default StudentList;
