@@ -5,7 +5,7 @@ import CreateStudentForm from "../CreateStudent";
 
 class StudentListBase extends Component {
   state = {
-    students: null,
+    students: [],
     adding: false,
     error: null
   };
@@ -20,9 +20,7 @@ class StudentListBase extends Component {
     try {
       const response = await studentsDB
         .where("teachers", "array-contains", authUser.uid)
-        .get();
-      const students = response.docs;
-      this.setState({ students });
+        .onSnapshot(snapshot => this.setState({ students: snapshot.docs }));
     } catch (error) {
       this.setState({ error });
     }
@@ -37,10 +35,11 @@ class StudentListBase extends Component {
       <div>
         <h2>Students</h2>
         <ul>
-          {this.state.students &&
-            this.state.students.map((student, i) => (
-              <li key={i}>{student.data().fullName}</li>
-            ))}
+          {this.state.students.length > 0
+            ? this.state.students.map((student, i) => (
+                <li key={i}>{student.data().fullName}</li>
+              ))
+            : null}
         </ul>
         {this.state.adding && <CreateStudentForm setAdding={this.setAdding} />}
         <button onClick={() => this.setState({ adding: true })}>
