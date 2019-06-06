@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import { withFirebase } from "../Firebase";
 import { withAuthUser } from "../Session";
 import CreateTaskForm from "../CreateTask";
@@ -37,7 +38,12 @@ class TaskListBase extends Component {
         <ul>
           {this.state.tasks.length > 0
             ? this.state.tasks.map((task, i) => (
-                <li key={i}>{task.data().title}</li>
+                <li
+                  onClick={() => this.props.history.push(`/tasks/${task.id}`)}
+                  key={i}
+                >
+                  {task.data().title}
+                </li>
               ))
             : null}
         </ul>
@@ -50,6 +56,6 @@ class TaskListBase extends Component {
   }
 }
 
-const TaskList = withAuthUser(withFirebase(TaskListBase));
+const TaskList = withAuthUser(withFirebase(withRouter(TaskListBase)));
 
 export default TaskList;
