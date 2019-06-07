@@ -8,7 +8,7 @@ class StudentPageBase extends Component {
     error: null
   };
 
-  fetchUser = async id => {
+  fetchStudent = async id => {
     try {
       const studentDB = this.props.firebase.db.collection("students");
       const response = await studentDB.doc(id).get();
@@ -20,7 +20,7 @@ class StudentPageBase extends Component {
   };
 
   componentDidMount() {
-    this.fetchUser(this.props.match.params.id);
+    this.fetchStudent(this.props.match.params.id);
   }
 
   render() {
