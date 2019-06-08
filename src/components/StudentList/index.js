@@ -38,16 +38,14 @@ class StudentListBase extends Component {
         <ul>
           {this.state.students.length > 0
             ? this.state.students.map((student, i) => (
-                <div key={i}>
-                  <li>{student.data().fullName}</li>
-                  <button
-                    onClick={() =>
-                      this.props.history.push(`/students/${student.id}`)
-                    }
-                  >
-                    Edit Student
-                  </button>
-                </div>
+                <li
+                  key={i}
+                  onClick={() =>
+                    this.props.history.push(`/students/${student.id}`)
+                  }
+                >
+                  {student.data().fullName}
+                </li>
               ))
             : null}
         </ul>
