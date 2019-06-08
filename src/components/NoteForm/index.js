@@ -7,6 +7,7 @@ class NoteFormBase extends Component {
   state = {
     date: new Date(),
     text: "",
+    highestStep: 1,
     error: null
   };
 
@@ -20,7 +21,7 @@ class NoteFormBase extends Component {
       authUser,
       setAddingNote
     } = this.props;
-    const { date, text } = this.state;
+    const { date, text, highestStep } = this.state;
     e.preventDefault();
     try {
       await db
@@ -29,7 +30,7 @@ class NoteFormBase extends Component {
         .collection("tasks")
         .doc(params.taskID)
         .collection("notes")
-        .add({ date, text, createdBy: authUser.uid });
+        .add({ date, text, highestStep, createdBy: authUser.uid });
       this.setState({ date: "", text: "" });
       setAddingNote(false);
     } catch (error) {
@@ -38,14 +39,22 @@ class NoteFormBase extends Component {
   };
 
   render() {
-    const { date, text } = this.state;
+    const { date, text, highestStep } = this.state;
     return (
       <form onSubmit={this.handleSubmit}>
+        <label>Date</label>
         <input
           type="date"
           name="date"
           onChange={this.handleChange}
           value={date}
+        />
+        <label>Highest step achieved without full assistance</label>
+        <input
+          type="number"
+          name="highestStep"
+          value={highestStep}
+          onChange={this.handleChange}
         />
         <textarea name="text" onChange={this.handleChange} value={text} />
         <button type="submit">Submit</button>
