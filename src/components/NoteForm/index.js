@@ -5,7 +5,7 @@ import { withAuthUser } from "../Session";
 
 class NoteFormBase extends Component {
   state = {
-    date: null,
+    date: new Date(),
     text: "",
     error: null
   };
