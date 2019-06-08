@@ -20,6 +20,7 @@ class NoteFormBase extends Component {
       authUser,
       setAddingNote
     } = this.props;
+    const { date, text } = this.state;
     e.preventDefault();
     try {
       await db
@@ -28,7 +29,7 @@ class NoteFormBase extends Component {
         .collection("tasks")
         .doc(params.taskID)
         .collection("notes")
-        .add({ ...this.state, createdBy: authUser.uid });
+        .add({ date, text, createdBy: authUser.uid });
       this.setState({ date: "", text: "" });
       setAddingNote(false);
     } catch (error) {
