@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { withFirebase } from "../Firebase";
 import NoteForm from "../NoteForm";
+import NoteCard from "../NoteCard";
 
 class StudentTask extends Component {
   state = {
@@ -60,14 +61,7 @@ class StudentTask extends Component {
         </ol>
         <h3>Notes</h3>
         {notes
-          ? notes.map((note, i) => (
-              <div key={i}>
-                <h4>{note.data().date}</h4>
-                <label>Written by:</label>
-                <h5>{note.data().createdByName}</h5>
-                <p>{note.data().text}</p>
-              </div>
-            ))
+          ? notes.map((note, i) => <NoteCard key={i} note={note.data()} />)
           : null}
         {addingNote ? (
           <NoteForm setAddingNote={this.setAddingNote} />
