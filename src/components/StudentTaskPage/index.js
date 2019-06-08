@@ -31,12 +31,10 @@ class StudentTask extends Component {
         .collection("tasks")
         .doc(params.taskID)
         .collection("notes")
-        .get();
-      const foundNotesDocs = await foundNotesData.docs;
+        .onSnapshot(snapshot => this.setState({ notes: snapshot.docs }));
       this.setState({
         student: foundStudent,
-        task: foundTask,
-        notes: foundNotesDocs
+        task: foundTask
       });
     } catch (error) {
       console.log(error);
