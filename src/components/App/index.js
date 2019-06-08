@@ -9,6 +9,7 @@ import LoginPage from "../Login";
 import HomePage from "../Home";
 import StudentPage from "../StudentPage";
 import TaskPage from "../TaskPage";
+import StudentTaskPage from "../StudentTaskPage";
 
 import * as ROUTES from "../../constants/routes";
 
@@ -16,17 +17,6 @@ class AppBase extends Component {
   state = {
     authUser: null
   };
-
-  // fetchUser = async authUser => {
-  //   const userDB = this.props.firebase.db.collection("users");
-  //   try {
-  //     const response = await userDB.doc(authUser.uid).get();
-  //     const foundUser = response.data();
-  //     this.setState({ authUser: foundUser });
-  //   } catch (error) {
-  //     throw new Error(error);
-  //   }
-  // };
 
   componentDidMount() {
     this.props.firebase.auth.onAuthStateChanged(authUser =>
@@ -45,8 +35,9 @@ class AppBase extends Component {
           {this.state.authUser && (
             <Route exact path={ROUTES.HOME} component={HomePage} />
           )}
-          <Route path={ROUTES.SHOWSTUDENT} component={StudentPage} />
-          <Route path={ROUTES.SHOWTASK} component={TaskPage} />
+          <Route exact path={ROUTES.SHOWSTUDENT} component={StudentPage} />
+          <Route exact path={ROUTES.SHOWTASK} component={TaskPage} />
+          <Route exact path={ROUTES.STUDENTTASK} component={StudentTaskPage} />
         </Router>
       </AuthUserContext.Provider>
     );

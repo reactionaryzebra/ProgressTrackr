@@ -91,7 +91,11 @@ class StudentPageBase extends Component {
             {student.tasks.map((task, i) => (
               <li
                 key={i}
-                onClick={() => this.props.history.push(`/tasks/${task.id}`)}
+                onClick={() =>
+                  this.props.history.push(
+                    `/students/${this.props.match.params.id}/tasks/${task.id}`
+                  )
+                }
               >
                 {task.data().title}
               </li>

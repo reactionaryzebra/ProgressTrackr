@@ -4,3 +4,4 @@ export const LOGIN = "/login";
 export const HOME = "/home";
 export const SHOWSTUDENT = "/students/:id";
 export const SHOWTASK = "/tasks/:id";
+export const STUDENTTASK = "/students/:studentID/tasks/:taskID";
