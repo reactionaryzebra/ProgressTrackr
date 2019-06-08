@@ -10,6 +10,7 @@ import HomePage from "../Home";
 import StudentPage from "../StudentPage";
 import TaskPage from "../TaskPage";
 import StudentTaskPage from "../StudentTaskPage";
+import ForgotPasswordPage from "../ForgotPassword";
 
 import * as ROUTES from "../../constants/routes";
 
@@ -38,6 +39,11 @@ class AppBase extends Component {
           <Route exact path={ROUTES.SHOWSTUDENT} component={StudentPage} />
           <Route exact path={ROUTES.SHOWTASK} component={TaskPage} />
           <Route exact path={ROUTES.STUDENTTASK} component={StudentTaskPage} />
+          <Route
+            exact
+            path={ROUTES.FORGOTPASSWORD}
+            component={ForgotPasswordPage}
+          />
         </Router>
       </AuthUserContext.Provider>
     );
