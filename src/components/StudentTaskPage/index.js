@@ -63,6 +63,8 @@ class StudentTask extends Component {
           ? notes.map((note, i) => (
               <div key={i}>
                 <h4>{note.data().date}</h4>
+                <label>Written by:</label>
+                <h5>{note.data().createdByName}</h5>
                 <p>{note.data().text}</p>
               </div>
             ))

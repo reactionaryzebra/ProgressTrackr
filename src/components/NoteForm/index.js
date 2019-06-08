@@ -5,7 +5,7 @@ import { withAuthUser } from "../Session";
 
 class NoteFormBase extends Component {
   state = {
-    date: new Date(),
+    date: "",
     text: "",
     highestStep: 1,
     error: null
@@ -24,13 +24,24 @@ class NoteFormBase extends Component {
     const { date, text, highestStep } = this.state;
     e.preventDefault();
     try {
+      const userDoc = await db
+        .collection("users")
+        .doc(authUser.uid)
+        .get();
+      const user = await userDoc.data();
       await db
         .collection("students")
         .doc(params.studentID)
         .collection("tasks")
         .doc(params.taskID)
         .collection("notes")
-        .add({ date, text, highestStep, createdBy: authUser.uid });
+        .add({
+          date,
+          text,
+          highestStep,
+          createdBy: authUser.uid,
+          createdByName: user.fullName
+        });
       this.setState({ date: "", text: "" });
       setAddingNote(false);
     } catch (error) {
@@ -40,6 +51,7 @@ class NoteFormBase extends Component {
 
   render() {
     const { date, text, highestStep } = this.state;
+    const { setAddingNote } = this.props;
     return (
       <form onSubmit={this.handleSubmit}>
         <label>Date</label>
@@ -58,6 +70,7 @@ class NoteFormBase extends Component {
         />
         <textarea name="text" onChange={this.handleChange} value={text} />
         <button type="submit">Submit</button>
+        <button onClick={() => setAddingNote(false)}>Cancel</button>
       </form>
     );
   }
