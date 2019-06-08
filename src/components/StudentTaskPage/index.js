@@ -6,6 +6,7 @@ class StudentTask extends Component {
   state = {
     student: null,
     task: null,
+    notes: null,
     addingNote: false,
     error: null
   };
@@ -25,9 +26,20 @@ class StudentTask extends Component {
         .doc(params.taskID)
         .get();
       const foundTask = await foundTaskDoc.data();
-      this.setState({ student: foundStudent, task: foundTask });
+      const foundNotesData = await studentDB
+        .doc(params.studentID)
+        .collection("tasks")
+        .doc(params.taskID)
+        .collection("notes")
+        .get();
+      const foundNotesDocs = await foundNotesData.docs;
+      this.setState({
+        student: foundStudent,
+        task: foundTask,
+        notes: foundNotesDocs
+      });
     } catch (error) {
-      this.setState({ error });
+      console.log(error);
     }
   };
 
@@ -38,7 +50,7 @@ class StudentTask extends Component {
   }
 
   render() {
-    const { student, task, addingNote, error } = this.state;
+    const { student, task, notes, addingNote, error } = this.state;
     return student ? (
       <div>
         <h1>{student.fullName}</h1>
@@ -49,6 +61,14 @@ class StudentTask extends Component {
           ))}
         </ol>
         <h3>Notes</h3>
+        {notes
+          ? notes.map((note, i) => (
+              <div key={i}>
+                <h4>{note.data().date}</h4>
+                <p>{note.data().text}</p>
+              </div>
+            ))
+          : null}
         {addingNote ? (
           <NoteForm setAddingNote={this.setAddingNote} />
         ) : (
