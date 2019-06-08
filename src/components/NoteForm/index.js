@@ -6,7 +6,8 @@ import { withAuthUser } from "../Session";
 class NoteFormBase extends Component {
   state = {
     date: null,
-    text: ""
+    text: "",
+    error: null
   };
 
   handleChange = e =>
@@ -31,7 +32,7 @@ class NoteFormBase extends Component {
       this.setState({ date: "", text: "" });
       setAddingNote(false);
     } catch (error) {
-      console.log(error);
+      this.setState({ error });
     }
   };
 
