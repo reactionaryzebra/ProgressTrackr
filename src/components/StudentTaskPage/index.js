@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { withFirebase } from "../Firebase";
+import NoteForm from "../NoteForm";
 
 class StudentTask extends Component {
   state = {
     student: null,
     task: null,
+    addingNote: false,
     error: null
   };
 
@@ -34,7 +36,7 @@ class StudentTask extends Component {
   }
 
   render() {
-    const { student, task, error } = this.state;
+    const { student, task, addingNote, error } = this.state;
     return student ? (
       <div>
         <h1>{student.fullName}</h1>
@@ -45,9 +47,13 @@ class StudentTask extends Component {
           ))}
         </ol>
         <h3>Notes</h3>
-        <button onClick={() => this.setState({ addingNote: true })}>
-          Add Note
-        </button>
+        {addingNote ? (
+          <NoteForm />
+        ) : (
+          <button onClick={() => this.setState({ addingNote: true })}>
+            Add Note
+          </button>
+        )}
       </div>
     ) : (
       <h1>loading...</h1>
