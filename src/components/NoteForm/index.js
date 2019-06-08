@@ -1,34 +1,57 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import { withFirebase } from "../Firebase";
 import { withAuthUser } from "../Session";
 
 class NoteFormBase extends Component {
   state = {
     date: null,
-    text: null
+    text: ""
   };
+
+  handleChange = e =>
+    this.setState({ [e.currentTarget.name]: e.currentTarget.value });
+
+  handleSubmit = async e => {
+    const {
+      match: { params },
+      firebase: { db },
+      authUser,
+      setAddingNote
+    } = this.props;
+    e.preventDefault();
+    try {
+      await db
+        .collection("students")
+        .doc(params.studentID)
+        .collection("tasks")
+        .doc(params.taskID)
+        .collection("notes")
+        .add({ ...this.state, createdBy: authUser.uid });
+      this.setState({ date: "", text: "" });
+      setAddingNote(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   render() {
     const { date, text } = this.state;
     return (
-      <form>
+      <form onSubmit={this.handleSubmit}>
         <input
           type="date"
           name="date"
           onChange={this.handleChange}
           value={date}
         />
-        <input
-          type="textfield"
-          name="text"
-          onChange={this.handleChange}
-          value={text}
-        />
+        <textarea name="text" onChange={this.handleChange} value={text} />
         <button type="submit">Submit</button>
       </form>
     );
   }
 }
 
-const NoteForm = withFirebase(withAuthUser(NoteFormBase));
+const NoteForm = withFirebase(withAuthUser(withRouter(NoteFormBase)));
 
 export default NoteForm;

@@ -31,6 +31,8 @@ class StudentTask extends Component {
     }
   };
 
+  setAddingNote = bool => this.setState({ addingNote: bool });
+
   componentDidMount() {
     this.fetchStudentTask();
   }
@@ -48,7 +50,7 @@ class StudentTask extends Component {
         </ol>
         <h3>Notes</h3>
         {addingNote ? (
-          <NoteForm />
+          <NoteForm setAddingNote={this.setAddingNote} />
         ) : (
           <button onClick={() => this.setState({ addingNote: true })}>
             Add Note
