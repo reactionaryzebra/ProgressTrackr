@@ -7,7 +7,7 @@ class NoteFormBase extends Component {
   state = {
     date: "",
     text: "",
-    highestStep: 1,
+    highestStep: 0,
     error: null
   };
 
@@ -52,6 +52,7 @@ class NoteFormBase extends Component {
   render() {
     const { date, text, highestStep } = this.state;
     const { setAddingNote } = this.props;
+    const isInvalid = date === "" || text === "" || highestStep === 0;
     return (
       <form onSubmit={this.handleSubmit}>
         <label>Date</label>
@@ -69,7 +70,9 @@ class NoteFormBase extends Component {
           onChange={this.handleChange}
         />
         <textarea name="text" onChange={this.handleChange} value={text} />
-        <button type="submit">Submit</button>
+        <button type="submit" disabled={isInvalid}>
+          Submit
+        </button>
         <button onClick={() => setAddingNote(false)}>Cancel</button>
       </form>
     );
