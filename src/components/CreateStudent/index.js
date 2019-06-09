@@ -28,6 +28,7 @@ class CreateStudentFormBase extends Component {
   };
 
   render() {
+    const isInvalid = this.state.fullName === "";
     return (
       <form onSubmit={this.handleSubmit}>
         <input
@@ -37,7 +38,10 @@ class CreateStudentFormBase extends Component {
           onChange={this.handleChange}
           placeholder={"Full Name"}
         />
-        <button type="submit">Add</button>
+        <button type="submit" disabled={isInvalid}>
+          Add
+        </button>
+        <button onClick={() => this.props.setAdding(false)}>Cancel</button>
       </form>
     );
   }

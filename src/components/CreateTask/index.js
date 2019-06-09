@@ -28,6 +28,7 @@ class CreateTaskFormBase extends Component {
   };
 
   render() {
+    const isInvalid = this.state.title === "";
     return (
       <form onSubmit={this.handleSubmit}>
         <input
@@ -37,7 +38,10 @@ class CreateTaskFormBase extends Component {
           onChange={this.handleChange}
           placeholder={"Task Title"}
         />
-        <button type="submit">Add</button>
+        <button type="submit" disabled={isInvalid}>
+          Add
+        </button>
+        <button onClick={() => this.props.setAdding(false)}>Cancel</button>
       </form>
     );
   }
