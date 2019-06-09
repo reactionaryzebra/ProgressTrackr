@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Loader from "react-loader-spinner";
 import { withFirebase } from "../Firebase";
 import NoteForm from "../NoteForm";
 import NoteCard from "../NoteCard";
@@ -72,7 +73,7 @@ class StudentTask extends Component {
         )}
       </div>
     ) : (
-      <h1>loading...</h1>
+      <Loader type="Triangle" color="#00BFFF" height="100" width="100" />
     );
   }
 }

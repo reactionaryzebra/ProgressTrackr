@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Loader from "react-loader-spinner";
 import { withRouter } from "react-router-dom";
 import { withFirebase } from "../Firebase";
 
@@ -118,7 +119,7 @@ class TaskPageBase extends Component {
         <button onClick={this.handleSubmit}>Submit Task</button>
       </div>
     ) : (
-      <h1>loading...</h1>
+      <Loader type="Triangle" color="#00BFFF" height="100" width="100" />
     );
   }
 }
