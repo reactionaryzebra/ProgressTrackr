@@ -21,15 +21,17 @@ class TaskPageBase extends Component {
     error: null,
     newStep: "",
     addingStep: false,
-    newCategory: ""
+    newCategory: "",
+    stepEditing: null,
+    stepEditingIndex: null
   };
 
   fetchTask = async id => {
     try {
       const taskDB = this.props.firebase.db.collection("tasks");
-      const response = await taskDB.doc(id).get();
-      const foundTask = await response.data();
-      this.setState({ task: foundTask });
+      const response = await taskDB
+        .doc(id)
+        .onSnapshot(snapshot => this.setState({ task: snapshot.data() }));
     } catch (error) {
       this.setState({ error });
     }
@@ -61,7 +63,7 @@ class TaskPageBase extends Component {
     });
   };
 
-  handleSubmit = async e => {
+  handleSubmitTask = async e => {
     const {
       firebase,
       match: { params },
@@ -73,6 +75,24 @@ class TaskPageBase extends Component {
       const tasksDB = firebase.db.collection("tasks");
       await tasksDB.doc(params.id).set(task);
       history.push("/home");
+    } catch (error) {
+      this.setState({ error });
+    }
+  };
+
+  handleSubmitEdit = async () => {
+    const {
+      firebase: { db },
+      match: { params }
+    } = this.props;
+    const newSteps = [...this.state.task.steps];
+    newSteps[this.state.stepEditingIndex] = this.state.stepEditing;
+    try {
+      await db
+        .collection("tasks")
+        .doc(params.id)
+        .update({ steps: newSteps });
+      this.setState({ stepEditing: null, stepEditingIndex: null });
     } catch (error) {
       this.setState({ error });
     }
@@ -101,9 +121,39 @@ class TaskPageBase extends Component {
         )}
         {task.steps ? (
           <ol>
-            {task.steps.map((step, i) => (
-              <li key={i}>{step}</li>
-            ))}
+            {task.steps.map((step, i) =>
+              this.state.stepEditingIndex === i ? (
+                <div key={i}>
+                  <input
+                    value={this.state.stepEditing}
+                    onChange={this.handleChange}
+                    name="stepEditing"
+                  />
+                  <button onClick={this.handleSubmitEdit}>Submit</button>
+                  <button
+                    onClick={() =>
+                      this.setState({
+                        stepEditingIndex: null,
+                        stepEditing: null
+                      })
+                    }
+                  >
+                    Cancel
+                  </button>
+                </div>
+              ) : (
+                <div key={i}>
+                  <li>{step}</li>
+                  <button
+                    onClick={() =>
+                      this.setState({ stepEditingIndex: i, stepEditing: step })
+                    }
+                  >
+                    Edit Step
+                  </button>
+                </div>
+              )
+            )}
           </ol>
         ) : null}
         {this.state.addingStep && (
@@ -116,7 +166,7 @@ class TaskPageBase extends Component {
         <button onClick={() => this.setState({ addingStep: true })}>
           Add Step
         </button>
-        <button onClick={this.handleSubmit}>Submit Task</button>
+        <button onClick={this.handleSubmitTask}>Submit Task</button>
       </div>
     ) : (
       <Loader type="Triangle" color="#00BFFF" height="100" width="100" />
