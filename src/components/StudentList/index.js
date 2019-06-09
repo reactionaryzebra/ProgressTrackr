@@ -8,6 +8,8 @@ class StudentListBase extends Component {
   state = {
     students: [],
     adding: false,
+    attemptingDelete: false,
+    studentToDelete: null,
     error: null
   };
 
@@ -27,6 +29,31 @@ class StudentListBase extends Component {
     }
   };
 
+  handleDeleteAttempt = student => {
+    this.setState({
+      attemptingDelete: true,
+      studentToDelete: { id: student.id, name: student.data().fullName }
+    });
+  };
+
+  handleDelete = async () => {
+    const {
+      firebase: { db }
+    } = this.props;
+    const {
+      studentToDelete: { id: studentID }
+    } = this.state;
+    try {
+      await db
+        .collection("students")
+        .doc(studentID)
+        .delete();
+      this.setState({ attemptingDelete: false, studentToDelete: null });
+    } catch (error) {
+      this.setState({ error });
+    }
+  };
+
   componentDidMount() {
     this.fetchStudents();
   }
@@ -35,24 +62,44 @@ class StudentListBase extends Component {
     return (
       <div>
         <h2>Students</h2>
-        <ul>
-          {this.state.students.length > 0
-            ? this.state.students.map((student, i) => (
-                <li
-                  key={i}
-                  onClick={() =>
-                    this.props.history.push(`/students/${student.id}`)
-                  }
-                >
-                  {student.data().fullName}
-                </li>
-              ))
-            : null}
-        </ul>
-        {this.state.adding && <CreateStudentForm setAdding={this.setAdding} />}
-        <button onClick={() => this.setState({ adding: true })}>
-          Add Student
-        </button>
+        {this.state.attemptingDelete ? (
+          <div>
+            <p>
+              Are you sure you want to delete {this.state.studentToDelete.name}?
+            </p>
+            <button onClick={this.handleDelete}>Yes</button>
+            <button onClick={() => this.setState({ attemptingDelete: false })}>
+              No
+            </button>
+          </div>
+        ) : (
+          <div>
+            <ul>
+              {this.state.students.length > 0
+                ? this.state.students.map((student, i) => (
+                    <div key={i}>
+                      <li
+                        onClick={() =>
+                          this.props.history.push(`/students/${student.id}`)
+                        }
+                      >
+                        {student.data().fullName}
+                      </li>
+                      <button onClick={() => this.handleDeleteAttempt(student)}>
+                        Delete Student
+                      </button>
+                    </div>
+                  ))
+                : null}
+            </ul>
+            {this.state.adding && (
+              <CreateStudentForm setAdding={this.setAdding} />
+            )}
+            <button onClick={() => this.setState({ adding: true })}>
+              Add Student
+            </button>
+          </div>
+        )}
       </div>
     );
   }
