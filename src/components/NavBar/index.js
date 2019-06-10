@@ -2,21 +2,22 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import LogoutButton from "../Logout";
 import { withAuthUser } from "../Session";
+import NavigationBar from "../../Styles/NavigationBar";
 
 import * as ROUTES from "../../constants/routes";
 
 const NavBarAuth = () => (
-  <nav>
+  <NavigationBar>
     <NavLink to={ROUTES.HOME}>Home</NavLink>
     <LogoutButton />
-  </nav>
+  </NavigationBar>
 );
 
 const NavBarNoAuth = () => (
-  <nav>
+  <NavigationBar>
     <NavLink to={ROUTES.LOGIN}>Login</NavLink>
     <NavLink to={ROUTES.REGISTER}>Register</NavLink>
-  </nav>
+  </NavigationBar>
 );
 
 const NavBarBase = ({ authUser }) =>
