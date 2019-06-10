@@ -3,6 +3,7 @@ import Loader from "react-loader-spinner";
 import { withFirebase } from "../Firebase";
 import NoteForm from "../NoteForm";
 import NoteCard from "../NoteCard";
+import LoadingContainer from "../../styles/LoadingContainer";
 
 class StudentTask extends Component {
   state = {
@@ -129,7 +130,9 @@ class StudentTask extends Component {
         )}
       </div>
     ) : (
-      <Loader type="Triangle" color="#a16e83" height="100" width="100" />
+      <LoadingContainer>
+        <Loader type="Triangle" color="#a16e83" height="100" width="100" />
+      </LoadingContainer>
     );
   }
 }

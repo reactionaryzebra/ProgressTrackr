@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Loader from "react-loader-spinner";
 import { withRouter } from "react-router-dom";
 import { withFirebase } from "../Firebase";
+import LoadingContainer from "../../styles/LoadingContainer";
 
 const AddStepInput = ({ newStep, handleChange, handleAddStep }) => (
   <div>
@@ -169,7 +170,9 @@ class TaskPageBase extends Component {
         <button onClick={this.handleSubmitTask}>Submit Task</button>
       </div>
     ) : (
-      <Loader type="Triangle" color="#a16e83" height="100" width="100" />
+      <LoadingContainer>
+        <Loader type="Triangle" color="#a16e83" height="100" width="100" />
+      </LoadingContainer>
     );
   }
 }

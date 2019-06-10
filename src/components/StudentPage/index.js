@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import { withFirebase } from "../Firebase";
 import { withAuthUser } from "../Session";
 import Loader from "react-loader-spinner";
+import LoadingContainer from "../../styles/LoadingContainer";
 
 class StudentPageBase extends Component {
   state = {
@@ -121,7 +122,9 @@ class StudentPageBase extends Component {
         </button>
       </div>
     ) : (
-      <Loader type="Triangle" color="#a16e83" height="100" width="100" />
+      <LoadingContainer>
+        <Loader type="Triangle" color="#a16e83" height="100" width="100" />
+      </LoadingContainer>
     );
   }
 }
