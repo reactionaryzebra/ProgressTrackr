@@ -2,12 +2,17 @@ import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { withFirebase } from "../Firebase";
 import * as ROUTES from "../../constants/routes";
+import AuthPage from "../../styles/AuthPage";
+import AuthContainer from "../../styles/AuthContainer";
+import AuthForm from "../../styles/AuthForm";
 
 const RegistrationPage = () => (
-  <div>
-    <h1>Registration</h1>
-    <RegistrationForm />
-  </div>
+  <AuthPage>
+    <AuthContainer>
+      <h1>Registration</h1>
+      <RegistrationForm />
+    </AuthContainer>
+  </AuthPage>
 );
 
 const initialState = {
@@ -55,7 +60,7 @@ class RegistrationFormBase extends Component {
       fullName === "";
 
     return (
-      <form onSubmit={this.handleSubmit}>
+      <AuthForm onSubmit={this.handleSubmit}>
         <input
           name="fullName"
           value={fullName}
@@ -89,7 +94,7 @@ class RegistrationFormBase extends Component {
         </button>
 
         {error && <p>{error.message}</p>}
-      </form>
+      </AuthForm>
     );
   }
 }

@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import LogoutButton from "../Logout";
 import { withAuthUser } from "../Session";
-import NavigationBar from "../../Styles/NavigationBar";
+import NavigationBar from "../../styles/NavigationBar";
 
 import * as ROUTES from "../../constants/routes";
 

@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
+import AuthPage from "../../styles/AuthPage";
+import AuthContainer from "../../styles/AuthContainer";
+import AuthForm from "../../styles/AuthForm";
 
 import { RegistrationLink } from "../Registration";
 import { ForgotPasswordLink } from "../ForgotPassword";
@@ -7,12 +10,14 @@ import { withFirebase } from "../Firebase";
 import * as ROUTES from "../../constants/routes";
 
 const LoginPage = () => (
-  <div>
-    <h1>Login</h1>
-    <LoginForm />
-    <ForgotPasswordLink />
-    <RegistrationLink />
-  </div>
+  <AuthPage>
+    <AuthContainer>
+      <h1>Login</h1>
+      <LoginForm />
+      <ForgotPasswordLink />
+      <RegistrationLink />
+    </AuthContainer>
+  </AuthPage>
 );
 
 const initialState = {
@@ -25,6 +30,7 @@ class LoginFormBase extends Component {
   state = { ...initialState };
 
   handleSubmit = async e => {
+    console.log("here");
     const { email, password } = this.state;
     e.preventDefault();
     try {
@@ -46,7 +52,7 @@ class LoginFormBase extends Component {
     const isInvalid = password === "" || email === "";
 
     return (
-      <form onSubmit={this.handleSubmit}>
+      <AuthForm onSubmit={this.handleSubmit}>
         <input
           name="email"
           value={email}
@@ -66,7 +72,7 @@ class LoginFormBase extends Component {
         </button>
 
         {error && <p>{error.message}</p>}
-      </form>
+      </AuthForm>
     );
   }
 }
