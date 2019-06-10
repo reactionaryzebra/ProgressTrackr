@@ -11,6 +11,7 @@ import StudentPage from "../StudentPage";
 import TaskPage from "../TaskPage";
 import StudentTaskPage from "../StudentTaskPage";
 import ForgotPasswordPage from "../ForgotPassword";
+import LandingPage from "../LandingPage";
 
 import * as ROUTES from "../../constants/routes";
 
@@ -30,7 +31,7 @@ class AppBase extends Component {
       <AuthUserContext.Provider value={this.state.authUser}>
         <Router>
           <NavBar />
-
+          <Route exact path={ROUTES.LANDING} component={LandingPage} />
           <Route exact path={ROUTES.REGISTER} component={RegistrationPage} />
           <Route exact path={ROUTES.LOGIN} component={LoginPage} />
           {this.state.authUser && (

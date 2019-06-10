@@ -8,15 +8,21 @@ import * as ROUTES from "../../constants/routes";
 
 const NavBarAuth = () => (
   <NavigationBar>
-    <NavLink to={ROUTES.HOME}>Home</NavLink>
-    <LogoutButton />
+    <div>Progress Trackr</div>
+    <div>
+      <NavLink to={ROUTES.HOME}>Home</NavLink>
+      <LogoutButton />
+    </div>
   </NavigationBar>
 );
 
 const NavBarNoAuth = () => (
   <NavigationBar>
-    <NavLink to={ROUTES.LOGIN}>Login</NavLink>
-    <NavLink to={ROUTES.REGISTER}>Register</NavLink>
+    <div>Progress Trackr</div>
+    <div>
+      <NavLink to={ROUTES.LOGIN}>Login</NavLink>
+      <NavLink to={ROUTES.REGISTER}>Register</NavLink>
+    </div>
   </NavigationBar>
 );
 
