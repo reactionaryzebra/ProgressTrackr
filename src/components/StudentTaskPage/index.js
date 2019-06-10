@@ -129,7 +129,7 @@ class StudentTask extends Component {
         )}
       </div>
     ) : (
-      <Loader type="Triangle" color="#00BFFF" height="100" width="100" />
+      <Loader type="Triangle" color="#a16e83" height="100" width="100" />
     );
   }
 }
