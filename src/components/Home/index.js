@@ -1,13 +1,21 @@
 import React from "react";
 import StudentList from "../StudentList";
 import TaskList from "../TaskList";
+import Home from "../../styles/Home";
 
 const HomePage = () => (
-  <div>
-    <h1>This is the Home page</h1>
-    <StudentList />
-    <TaskList />
-  </div>
+  <Home>
+    <div>
+      <div>
+        <h2>Your Students</h2>
+        <StudentList />
+      </div>
+      <div>
+        <h2>Your Tasks</h2>
+        <TaskList />
+      </div>
+    </div>
+  </Home>
 );
 
 export default HomePage;

@@ -3,6 +3,8 @@ import { withRouter } from "react-router-dom";
 import { withFirebase } from "../Firebase";
 import { withAuthUser } from "../Session";
 import CreateTaskForm from "../CreateTask";
+import StudentOrTaskList from "../../styles/StudentOrTaskList";
+import { FiDelete } from "react-icons/fi";
 
 class TaskListBase extends Component {
   state = {
@@ -60,7 +62,6 @@ class TaskListBase extends Component {
   render() {
     return (
       <div>
-        <h2>Tasks</h2>
         {this.state.attemptingDelete ? (
           <div>
             <p>
@@ -74,24 +75,27 @@ class TaskListBase extends Component {
           </div>
         ) : (
           <div>
-            <ul>
+            <StudentOrTaskList>
               {this.state.tasks.length > 0
                 ? this.state.tasks.map((task, i) => (
-                    <div key={i}>
-                      <li
+                    <li key={i}>
+                      <p
                         onClick={() =>
                           this.props.history.push(`/tasks/${task.id}`)
                         }
                       >
                         {task.data().title}
-                      </li>
-                      <button onClick={() => this.handleDeleteAttempt(task)}>
+                      </p>
+                      <FiDelete
+                        size="3em"
+                        onClick={() => this.handleDeleteAttempt(task)}
+                      >
                         Delete Task
-                      </button>
-                    </div>
+                      </FiDelete>
+                    </li>
                   ))
                 : null}
-            </ul>
+            </StudentOrTaskList>
             {this.state.adding && <CreateTaskForm setAdding={this.setAdding} />}
             <button onClick={() => this.setState({ adding: true })}>
               Add Task
