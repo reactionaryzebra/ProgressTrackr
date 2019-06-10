@@ -10,6 +10,7 @@ const Landing = styled.div`
   font-family: Archivo;
   font-size: 2.5rem;
   div:nth-child(2) {
+    background: #a16e83;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -17,6 +18,8 @@ const Landing = styled.div`
     height: 60%;
     font-size: 1.75rem;
     line-height: 3rem;
+    padding: 1rem;
+    box-shadow: 0 0 5px 5px #a16e83;
     label {
       text-decoration: underline;
     }

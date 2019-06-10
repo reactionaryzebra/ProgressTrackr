@@ -8,6 +8,9 @@ const Home = styled.div`
   align-items: center;
   padding-top: 1rem;
   color: #19181a;
+  h2 {
+    text-decoration: underline;
+  }
   div {
     display: flex;
     height: 85%;

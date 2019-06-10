@@ -8,6 +8,7 @@ const StudentOrTaskList = styled.ul`
   height: 100%;
   width: 100%;
   li {
+    background: rgba(161, 110, 131, 0.3);
     display: flex;
     flex-direction: row;
     justify-content: space-between;
