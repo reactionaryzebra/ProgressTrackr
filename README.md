@@ -13,3 +13,7 @@ Progress Trackr is a tool built to allow teachers (in any sense of that word - t
 3. The user creates a task
 4. The user assigns a particular task to a particular student
 5. The user writes notes to track the progress of the student.
+
+## Future improvements 
+* I would like to improve the UI of the program and the aesthetics to make it more pleasing to use
+* I would like to give users the ability to assign other users to students so that multiple teachers can track and take notes on the same student
